@@ -1,0 +1,9 @@
+name: DartTemplate
+author: Krishna Raman
+version: 1.0.0
+homepage: https://github.com/kraman/openshift-dart
+description: Template Dart application for OpenShift Dart cartridge
+dependencies:
+  browser: any
+  polymer: any
+  stream: any

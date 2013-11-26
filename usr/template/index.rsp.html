@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Welcome to OpenShift</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+  <body>
+    <section class='container'>
+      <hgroup>
+        <h1>Welcome to your Dart application on OpenShift</h1>
+      </hgroup>
+    
+      <div class="row">
+        <section class='col-xs-12 col-sm-6 col-md-6'>
+          <section>
+            <h2>Server side dart example</h2>
+            
+            <p>
+              This example uses a <a href="http://rikulo.org/projects/stream">Rikulo Stream</a> based Dart server to present this page.
+              Rikulo Stream provides support for server side request routing, filtering, and access to both static and server side templated content.</p>
+            <p>  
+              The time on the server is [=new DateTime.now()].<br/> This page is served by Rikulo Stream [=connect.server.version].
+            </p>
+            
+            <h2>Github repository</h2>
+            
+            <p>All the code for this cartridge is available at [https://github.com/kraman/openshift-dart](https://github.com/kraman/openshift-dart).<br/>
+              It runs a slightly modified version of dart/pub. Instructions for rebuilding are included in the [README file](https://github.com/kraman/openshift-dart/blob/master/README.md).
+            </p>
+            
+            <h2>Deploying code changes</h2>
+              <p>OpenShift uses the <a href="http://git-scm.com/">Git version control system</a> for your source code, and grants you access to it via the Secure Shell (SSH) protocol. In order to upload and download code to your application you need to give us your <a href="https://www.openshift.com/developers/remote-access">public SSH key</a>. You can upload it within the web console or install the <a href="https://www.openshift.com/developers/rhc-client-tools-install">RHC command line tool</a> and run <code>rhc setup</code> to generate and upload your key automatically.</p>
+              
+              <h3>Working in your local Git repository</h3>
+              <p>If you created your application from the command line and uploaded your SSH key, rhc will automatically download a copy of that source code repository (Git calls this 'cloning') to your local system.</p>
+            
+              <p>If you created the application from the web console, you'll need to manually clone the repository to your local system. Copy the application's source code Git URL and then run:</p>
+            
+<pre>$ git clone &lt;git_url&gt; &lt;directory_to_create&gt;
+
+# Within your project directory
+# Commit your changes and push to OpenShift
+
+$ git commit -a -m 'Some commit message'
+$ git push</pre>
+
+            <ul>
+              <li><a href="https://www.openshift.com/developers/deploying-and-building-applications">Learn more about deploying and building your application</a></li>
+              <li>See the README file in your local application Git repository for more information on the options for deploying applications.</li>
+            </ul>
+          </section>
+        </section>
+        <section class="col-xs-12 col-sm-6 col-md-6">
+          <h2>Client side dart example</h2>
+            
+          <p>The following example runs a simple timer and updates the div below with the time every second. The code is written in Dart and is automatically compiled to javascript when it is pushed to the server.</p>
+            
+          <div id="sample_container_id">
+            <p id="sample_text_id"></p>
+          </div>
+          
+          <p>Here is the Dart code for this example:</p>
+<pre>import 'dart:html';
+import 'dart:async';
+
+void main() {
+  String t = new DateTime.now().toString();
+  querySelector("#sample_text_id").text = 
+      "The time is now: " + t + ".";
+  new Timer.periodic(const Duration(seconds: 1), getTime);
+}
+
+void getTime(Timer timer) {
+  String t = new DateTime.now().toString();
+  querySelector("#sample_text_id").text = 
+      "The time is now: " + t + ".";
+}
+</pre>
+        
+          <h2>Managing your application</h2>
+          
+          <h3>Web Console</h3>
+          <p>You can use the OpenShift web console to enable additional capabilities via cartridges, add collaborator access authorizations, designate custom domain aliases, and manage domain memberships.</p>
+          
+          <h3>Command Line Tools</h3>
+          <p>Installing the <a href="https://www.openshift.com/developers/rhc-client-tools-install">OpenShift RHC client tools</a> allows you complete control of your cloud environment. Read more on how to manage your application from the command line in our <a href="https://www.openshift.com/user-guide">User Guide</a>.
+          </p>
+          
+          <h2>Development Resources</h2>
+          <ul>
+            <li><a href="https://www.openshift.com/developers">Developer Center</a></li>
+            <li><a href="https://www.openshift.com/user-guide">User Guide</a></li>
+            <li><a href="https://www.openshift.com/forums/openshift">OpenShift forums</a></li>
+            <li><a href="http://stackoverflow.com/questions/tagged/openshift">Stack Overflow questions for OpenShift</a></li>
+            <li><a href="http://webchat.freenode.net/?randomnick=1&channels=openshift&uio=d4">IRC channel at #openshift on freenode.net</a></li>
+            <li><a href="http://git-scm.com/documentation">Git documentation</a></li>
+          </ul>
+        </section>
+      </div>        
+      <footer>
+        <div class="logo"><a href="https://www.openshift.com/"></a></div>
+      </footer>
+    </section>
+    <script type="application/dart" src="index.dart"></script>
+    <script src="packages/browser/dart.js"></script>
+  </body>
+</html>

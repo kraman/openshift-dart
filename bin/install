@@ -1,0 +1,4 @@
+#!/bin/bash
+
+mkdir -p $OPENSHIFT_HOMEDIR/.pub-cache
+chown `id -u $OPENSHIFT_GEAR_UUID` -R $OPENSHIFT_HOMEDIR/.pub-cache

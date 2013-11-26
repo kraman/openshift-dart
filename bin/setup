@@ -1,0 +1,14 @@
+#!/bin/bash -e
+
+# Don't set -u until after the above arg parsing is complete
+set -u
+
+pushd $OPENSHIFT_DART_DIR > /dev/null
+for dir in conf logs sessions run tmp; do
+    mkdir -p $dir
+done
+echo "$OPENSHIFT_DART_DIR/usr/dart-sdk/bin" > $OPENSHIFT_DART_DIR/env/OPENSHIFT_DART_PATH_ELEMENT
+
+
+popd > /dev/null
+

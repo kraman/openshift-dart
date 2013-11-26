@@ -1,0 +1,57 @@
+#!/bin/bash
+source $OPENSHIFT_CARTRIDGE_SDK_BASH
+
+function start() {
+  ${OPENSHIFT_DART_DIR}/usr/dart-sdk/bin/dart $OPENSHIFT_REPO_DIR/server.dart 2>&1 >> $OPENSHIFT_DART_LOG_DIR/dart.log &
+  pid=$!
+  echo $pid > ${OPENSHIFT_DART_PID_DIR}/dart.pid
+}
+
+function stop() {
+  if [ -f ${OPENSHIFT_DART_PID_DIR}/dart.pid ]; then
+    kill `cat ${OPENSHIFT_DART_PID_DIR}/dart.pid`
+    rm -f ${OPENSHIFT_DART_PID_DIR}/dart.pid
+  fi
+}
+
+function restart() {
+  stop
+  start
+}
+
+function build() {
+  pushd $OPENSHIFT_REPO_DIR
+  ${OPENSHIFT_DART_DIR}/usr/dart-sdk/bin/pub --trace --verbosity io get
+  ${OPENSHIFT_DART_DIR}/usr/dart-sdk/bin/pub --trace --verbosity io build
+  if [ -f build.dart ]; then
+    ${OPENSHIFT_DART_DIR}/usr/dart-sdk/bin/dart build.dart --full
+  fi
+  popd
+}
+
+# Clean up any log files
+function tidy() {
+  client_message "Emptying log dir: $OPENSHIFT_NODEJS_LOG_DIR"
+  shopt -s dotglob
+  rm -rf $OPENSHIFT_NODEJS_LOG_DIR/*
+  rm -rf ${OPENSHIFT_NODEJS_DIR}tmp/*
+}
+
+# Ensure arguments.
+if ! [ $# -eq 1 ]; then
+    echo "Usage: $0 [start|restart|graceful|graceful-stop|stop|status]"
+    exit 1
+fi
+
+# Handle commands.
+case "$1" in
+    start)               start       ;;
+    restart|graceful)    restart     ;;
+    graceful-stop|stop)  stop        ;;
+#    status)              status      ;;
+    build)               build       ;;
+#    post-deploy)         post-deploy ;;
+    tidy)                tidy        ;;
+#    pre-repo-archive)    pre-repo-archive ;;
+    *) exit 0;
+esac

@@ -1,0 +1,38 @@
+Name: dart
+Display-Name: DartLang 1.1
+Description: Provides an empty Dartlang based cartridge
+License: ASL 2.0
+License-Url: http://www.apache.org/licenses/LICENSE-2.0.txt
+Cartridge-Short-Name: DART
+Version: '1.1'
+Cartridge-Version: 1.0
+Cartridge-Vendor: kraman
+Source-Url: 'https://github.com/kraman/openshift-dart/archive/master.zip'
+Install-Build-Required: true
+Categories:
+- web_framework
+- experimental
+- service
+Scaling:
+  Min: 1
+  Max: -1
+Group-Overrides:
+- components:
+  - web-proxy
+Endpoints:
+  - Private-IP-Name: IP
+    Private-Port-Name: PORT
+    Private-Port: 8080
+    Public-Port-Name: PROXY_PORT
+    Mappings:
+      - Frontend: ""
+        Backend: ""
+        Options:
+          websocket: true
+    Protocols:
+      - http
+      - ws
+  - Private-IP-Name: PUB_BUILD_IP
+    Private-Port-Name: PUB_BUILD_PORT
+    Private-Port: 8081
+    Public-Port-Name: PUB_BUILD_IP_UNUSED
